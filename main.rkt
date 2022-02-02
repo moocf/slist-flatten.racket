@@ -1,23 +1,23 @@
 #lang racket
 
-; (flatten.sexp sexp to): SE X L -> L
+; (slist.flatten-sexp-to sexp to): SE X L -> L
 ; return list of symbols in sexp added to list "to"
-(define flatten.sexp
+(define slist.flatten-sexp-to
   (lambda (sexp to)
     (if (not (list? sexp))
         (cons sexp to)
-        (flatten.slist sexp to))))
+        (slist.flatten-to sexp to))))
 
-; (flatten.slist slist to): SL X L -> L
+; (slist.flatten-to slist to): SL X L -> L
 ; returns list of symbols in slist added to list "to"
-(define flatten.slist
+(define slist.flatten-to
   (lambda (slist to)
     (if (null? slist)
         to
-        (flatten.sexp (car slist) (flatten.slist (cdr slist) to)))))
+        (slist.flatten-sexp-to (car slist) (slist.flatten-to (cdr slist) to)))))
 
-; (flatten slist): SL -> L
+; (slist.flatten slist): SL -> L
 ; returns list of symbols in slist in the same order
-(define flatten
+(define slist.flatten
   (lambda (slist)
-    (flatten.slist slist (list))))
+    (slist.flatten-to slist (list))))
